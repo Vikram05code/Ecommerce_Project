@@ -93,7 +93,7 @@ public class AuthController {
 		 authResponse.setJwt(token);
 		 authResponse.setMessage("Signin successfully");
 		 
-		 return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
+		 return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.OK);
 	}
 
 	private Authentication authenticate(String username, String password) {
