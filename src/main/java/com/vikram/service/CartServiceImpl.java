@@ -1,6 +1,7 @@
 package com.vikram.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.vikram.exception.ProductException;
 import com.vikram.model.Cart;
@@ -11,6 +12,7 @@ import com.vikram.repository.CartItemRepository;
 import com.vikram.repository.CartRepository;
 import com.vikram.request.AddItemRequest;
 
+@Service
 public class CartServiceImpl implements CartService{
 	
 	@Autowired

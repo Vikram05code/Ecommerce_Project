@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name="orders")
 public class Order {
 
 	@Id
@@ -44,7 +46,7 @@ public class Order {
 	private LocalDateTime deliveryDate;
 	
 	@OneToOne
-	private Address shiAddress;
+	private Address shippingAddress;
 	
 	@Embedded
 	private PaymentDetails paymentDetails;

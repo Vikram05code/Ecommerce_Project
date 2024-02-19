@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.hibernate.query.NativeQuery.ReturnableResultNode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.vikram.exception.CartItemException;
 import com.vikram.exception.UserException;
@@ -14,6 +15,7 @@ import com.vikram.model.User;
 import com.vikram.repository.CartItemRepository;
 import com.vikram.repository.CartRepository;
 
+@Service
 public class CartItemServiceImpl implements CartItemService{
 	
 	@Autowired
