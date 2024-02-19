@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructoro
+@NoArgsConstructor
 public class PaymentInformation {
 
 	@Column(name="cardholder_name")
