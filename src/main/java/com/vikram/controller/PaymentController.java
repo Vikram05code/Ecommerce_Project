@@ -9,14 +9,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.razorpay.Payment;
 import com.razorpay.PaymentLink;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
 import com.vikram.exception.OrderException;
 import com.vikram.model.Order;
 import com.vikram.repository.OrderRepository;
+import com.vikram.response.ApiResponse;
 import com.vikram.response.PaymentLinkResponse;
 import com.vikram.service.OrderService;
 import com.vikram.service.UserService;
@@ -90,5 +93,36 @@ public class PaymentController {
 		
 
 	}
+	
+	
+	public ResponseEntity<ApiResponse> redirect(@RequestParam(name="payment_id") String paymentId, 
+			@RequestParam(name="order_id") Long orderId) throws OrderException, RazorpayException{
+		
+		Order order = orderService.findOrderById(orderId);
+		RazorpayClient razorpay = new RazorpayClient(apiKey, apiSecret);
+		
+		try {
+			
+			Payment payment = razorpay.payments.fetch(paymentId);
+			
+			if(payment.get("status").equals("captured")) {
+				order.getPaymentDetails().setPaymentId(paymentId);
+				order.getPaymentDetails().setStatus("COMPLETED");
+				order.setOrderStatus("PLACED");
+				orderRepository.save(order);
+			}
+			
+			ApiResponse response = new ApiResponse();
+			response.setMessage("Your order gets placed");
+			response.setStatus(true);
+			
+			return new ResponseEntity<ApiResponse>(response, HttpStatus.ACCEPTED);
+			
+		} catch (Exception e) {
+			throw new RazorpayException(e.getMessage());
+		}
+		
+	}
+	
 	
 }
