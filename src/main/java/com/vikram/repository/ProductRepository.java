@@ -24,4 +24,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 		                                    @Param("minDiscount") Integer minDiscount, 
 		                                    @Param("sort") String sort);
 
+	
+	@Query("SELECT p from Product p Where p.category.name=:category")
+	public List<Product> findProductByCategory(@Param("category") String category);
+	
 }

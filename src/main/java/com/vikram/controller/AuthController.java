@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vikram.config.JwtProvider;
 import com.vikram.exception.UserException;
+import com.vikram.model.Cart;
 import com.vikram.model.User;
 import com.vikram.repository.UserRepository;
 import com.vikram.request.LoginRequest;
 import com.vikram.response.AuthResponse;
+import com.vikram.service.CartService;
 import com.vikram.service.CustomUserServiceImplementation;
 
 import io.jsonwebtoken.security.Message;
@@ -41,6 +43,11 @@ public class AuthController {
 	@Autowired
 	private CustomUserServiceImplementation customUserServiceImplementation;
 
+	@Autowired
+	private CartService cartService;
+	
+	
+	
 	@PostMapping("/signup")
 	 public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws UserException{
 		 
@@ -63,6 +70,8 @@ public class AuthController {
 		 createdUser.setLastName(lastName);
 		 
 		 User savedUser = userRepository.save(createdUser);
+		 
+		 Cart cart = cartService.createCart(savedUser);
 		 
 		 Authentication authentication = new UsernamePasswordAuthenticationToken(savedUser.getEmail(), savedUser.getPassword());
 		 

@@ -124,9 +124,13 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public List<Product> findProductByCategory(String category) {
-		return null;
+		
+		List<Product> products = productRepository.findProductByCategory(category);
+		
+		return products;
 	}
 
+	
 	@Override
 	public Page<Product> getAllProduct(String category, List<String> colors, List<String> sizes, Integer minPrice,
 			Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize) {
@@ -151,14 +155,17 @@ public class ProductServiceImpl implements ProductService{
 		int startIndex=(int) pageable.getOffset();
 		int endIndex=Math.min(startIndex + pageable.getPageSize(), products.size());
 		
-		List<Product> pageContent = products.subList(startIndex, endIndex);
+		List<Product> pageContent = products.subList( startIndex, endIndex);
 		
 		Page<Product> filteredProducts = new PageImpl<>(pageContent, pageable, products.size());
 		
 		
 		return filteredProducts;
 	}
+	
 
+	
+	
 	@Override
 	public List<Product> findAllProducts() {
 		List<Product> products = productRepository.findAll();
