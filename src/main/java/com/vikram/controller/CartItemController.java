@@ -26,7 +26,7 @@ import com.vikram.service.CartService;
 import com.vikram.service.UserService;
 
 @RestController
-@RequestMapping("api/cartItems")
+@RequestMapping("api/cartItem")
 public class CartItemController {
 
 	@Autowired
@@ -70,7 +70,7 @@ public class CartItemController {
 	}
 	
 	
-	@DeleteMapping("/cartItem/{cartItemId}")
+	@DeleteMapping("/{cartItemId}")
 	public ResponseEntity<ApiResponse> removeCartItem(@PathVariable Long cartItemId, 
 			@RequestHeader("Authorization") String jwt) throws UserException, CartItemException{
 		
@@ -78,7 +78,7 @@ public class CartItemController {
 		cartItemService.removeCartItem(user.getId(), cartItemId);
 		
 		ApiResponse response = new ApiResponse();
-		response.setMessage("cartItem removed successfully");
+		response.setMessage("Item removed successfully from cart");
 		response.setStatus(true);
 		
 		return new ResponseEntity<ApiResponse>(response, HttpStatus.OK);
