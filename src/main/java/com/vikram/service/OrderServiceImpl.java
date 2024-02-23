@@ -14,6 +14,7 @@ import com.vikram.model.Cart;
 import com.vikram.model.CartItem;
 import com.vikram.model.Order;
 import com.vikram.model.OrderItems;
+import com.vikram.model.PaymentDetails;
 import com.vikram.model.User;
 import com.vikram.repository.AddressRepository;
 import com.vikram.repository.CartRepository;
@@ -80,7 +81,13 @@ public class OrderServiceImpl implements OrderService{
 		createdOrder.setShippingAddress(address);
 		createdOrder.setOrderDate(LocalDateTime.now());
 		createdOrder.setOrderStatus("PENDING");
-		createdOrder.getPaymentDetails().setStatus("PENDING");
+		
+		//Initialize PaymentDetails and set status
+		PaymentDetails paymentDetails = new PaymentDetails();
+		paymentDetails.setStatus("PENDING");
+		createdOrder.setPaymentDetails(paymentDetails);
+		
+		//createdOrder.getPaymentDetails().setStatus("PENDING");
 		createdOrder.setCreatedAt(LocalDateTime.now());
 		
 		Order savedOrder=orderRepository.save(createdOrder);
